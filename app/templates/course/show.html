@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- course details section start -->
+<section class="course-details custom-bg padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h5 class="tagline">{{ course.tagline }}</h5>
+                <img class="course-image" src="{{ HTTP_HOST }}/media/{{ course.image }}" alt="">
+            </div>
+            <div class="col-lg-5">
+                <h2 class="title">{{ course.title }}</h2>
+                <div class="row g-3">
+                    <div class="col-lg-4">
+                        <div class="card p-3 text-center">
+                            <p class="text-center m-2">Duration</p>
+                            <h5>{{ course.duration }} Months</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card p-3 text-center">
+                            <p class="text-center m-2">Lecture</p>
+                            <h5>{{ course.total_class }}+</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card p-3 text-center">
+                            <p class="text-center m-2">Project</p>
+                            <h5>{{ course.project }}+</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="details mt-4">
+                    <p>{{ course.short_description | safe }}</p>
+                </div>
+                <div class="buttons mt-4 d-flex gap-2">
+                    <a href="#" class="btn btn-custom"><i class="fa-solid fa-laptop-code"></i> Registration Now</a>
+                    <a href="#" class="btn btn-custom"><i class="fa-solid fa-laptop-code"></i> Free Seminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- course details section end -->
+
+<!-- course over view start -->
+<section class="course-details pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="course-overview">
+                    <h2>Course Overiew</h2>
+                    {{ course.overview | safe }}
+                </div>
+
+                <div class="curriculum mt-4 mb-5 pt-5">
+                    <h3 class="text-center">Course Curriculum</h3>
+                    <div class="accordion mt-4" id="course_module">
+                        {% for module in course.course_module_set.all %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button {% if not forloop.first %}collapsed {% endif %}"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ module.id }}"
+                                    aria-expanded="{% if forloop.first %}true {% else %} fasle {% endif %}"
+                                    aria-controls="collapse_{{ module.id }}">
+                                    <strong>{{ module.title }}</strong>
+                                </button>
+                            </h2>
+                            <div id="collapse_{{ module.id }}"
+                                class="accordion-collapse collapse {% if forloop.first %}show {% endif %}"
+                                data-bs-parent="#course_module">
+                                <div class="accordion-body">
+                                    {{ module.module | safe }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="software mt-4 mb-5">
+                    <h3 class="text-center">Course Curriculum</h3>
+                    <div class="row mt-4">
+                        {% for software in course.course_software_set.all %}
+                        <div class="col-lg-6">
+                            <div class="item d-flex gap-3 align-items-center mb-3">
+                                <div class="img">
+                                    <img src="{{ HTTP_HOST }}/media/{{ software.image }}" alt="" style="width: 50px;">
+                                </div>
+                                <div class="text">
+                                    <p class="m-0">{{ software.title }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="faqs mt-4">
+                    <h5 class="mb-3">Some Question and Answer</h5>
+                    {% for faq in course.question_answer_set.all %}
+                    <div class="faq">
+                        <p class="question">{{ faq.question }}</p>
+                        <p class="m-0">{{ faq.answer }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="custom-bg p-4 info">
+                    <h5>Admission going on..</h5>
+                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In facere perferendis
+                        omnis quis eveniet aliquid</p>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card admission text-center">
+                                <h3><span class="text-primary">Online</span> Course Fee</h3>
+                                <h3>{{ course.price }} Tk.</h3>
+                                <a href="#" class="btn-custom">Enrole Now</a>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card admission text-center">
+                                <h3><span class="text-primary">Offline</span> Course Fee</h3>
+                                <h3>{{ course.offline_price }} Tk.</h3>
+                                <a href="#" class="btn-custom">Enrole Now</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="mentors mt-4">
+                    <h4>Mentors</h4>
+
+                    {% for mentor in course.instructors.all %}
+                    <div class="mentor ">
+                        <img src="{{ HTTP_HOST }}/media/{{ mentor.image }}" alt="">
+                        <div class="text">
+                            <h4><a href="#">{{ mentor.name }}</a></h4>
+                            <p>{{ mentor.description }}</p>
+                            <a href="#" class="btn-custom">Check Info <i class="fa-solid fa-info-circle"></i></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="course-section mt-4">
+                    <div class="course-wrap ">
+                        <h4>Related Courses</h4>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card course">
+                                    <div class="image">
+                                        <a href="#"><img src="assets/images/1-scaled.jpg" alt=""></a>
+                                    </div>
+                                    <div class="text-area">
+                                        <h4 class="mb-3"><a href="#">Professional Graphic Design</a></h4>
+                                        <div class="info d-flex justify-content-between mb-3">
+                                            <div class="class">
+                                                <i class="fa-solid fa-circle-play"></i>
+                                                <span>36+ Classes</span>
+                                            </div>
+                                            <div class="month">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>3.5 Months</span>
+                                            </div>
+                                        </div>
+                                        <p class="fee">Course Fee: 21000 TK.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card course">
+                                    <div class="image">
+                                        <a href="#"><img src="assets/images/2-scaled.jpg" alt=""></a>
+                                    </div>
+                                    <div class="text-area">
+                                        <h4 class="mb-3"><a href="#">Professional Graphic Design</a></h4>
+                                        <div class="info d-flex justify-content-between mb-3">
+                                            <div class="class">
+                                                <i class="fa-solid fa-circle-play"></i>
+                                                <span>36+ Classes</span>
+                                            </div>
+                                            <div class="month">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>3.5 Months</span>
+                                            </div>
+                                        </div>
+                                        <p class="fee">Course Fee: 21000 TK.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card course">
+                                    <div class="image">
+                                        <a href="#"><img src="assets/images/12-scaled.jpg" alt=""></a>
+                                    </div>
+                                    <div class="text-area">
+                                        <h4 class="mb-3"><a href="#">Professional Graphic Design</a></h4>
+                                        <div class="info d-flex justify-content-between mb-3">
+                                            <div class="class">
+                                                <i class="fa-solid fa-circle-play"></i>
+                                                <span>36+ Classes</span>
+                                            </div>
+                                            <div class="month">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>3.5 Months</span>
+                                            </div>
+                                        </div>
+                                        <p class="fee">Course Fee: 21000 TK.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- course over view end -->
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- course section start -->
+<section class="course-section padding-top">
+    <div class="container course__container">
+        <div class="heading">
+            <h2>Popular Courses</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure, dolore autem! Commodi a, repudiandae
+                sed fugiat doloremque repellendus amet facere.</p>
+        </div>
+
+        {% for cat in categories %}
+        <div class="course-wrap">
+            <h4>{{ cat.name }}</h4>
+            <div class="row">
+                {% for course in cat.course_set.all %}
+                <div class="col-lg-4">
+                    <div class="card course">
+                        <div class="image">
+                            <a href="{% url 'course.show' course.slug %}"><img src="{{ HTTP_HOST }}/media/{{ course.image }}" alt=""></a>
+                        </div>
+                        <div class="text-area">
+                            <h4 class="mb-3"><a href="#">{{ course.title }}</a></h4>
+                            <div class="info d-flex justify-content-between mb-3">
+                                <div class="class">
+                                    <i class="fa-solid fa-circle-play"></i>
+                                    <span>{{ course.total_class }}+ Classes</span>
+                                </div>
+                                <div class="month">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>{{ course.duration }} Months</span>
+                                </div>
+                            </div>
+                            <p class="fee">Course Fee: {{ course.price }} TK.</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-lg-12 text-center p-5">
+                   <h3>No course available in this category!!</h3>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        {% endfor %}
+
+    </div>
+</section>
+<!-- course section end -->
+{% endblock %}

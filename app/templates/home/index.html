@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- hero section start -->
+<div class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-text">
+                    <p class="sub-title">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                    <h1>Lorem ipsum dolor sit amet consectetur.</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque temporibus excepturi iusto
+                        amet, blanditiis voluptates assumenda quas ullam dicta error voluptas, aut quae
+                        perspiciatis, at non minus sed beatae natus.</p>
+                    <div class="buttons mt-4 d-flex gap-2">
+                        <a href="#" class="btn btn-custom"><i class="fa-solid fa-laptop-code"></i> All
+                            Course</a>
+                        <a href="#" class="btn btn-custom"><i class="fa-solid fa-laptop-code"></i> About Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 ">
+                <div class="hero-image">
+                    <img class="" src="{% static 'assets/images/ci-64-scaled.jpg' %}" alt="">
+                    <img class="" src="{% static 'assets/images/ci-64-scaled.jpg' %}" alt="">
+                    <img class="" src="{% static 'assets/images/ci-64-scaled.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- hero section end -->
+
+<!-- service section start -->
+<section class="service-section">
+    <div class="container service__container">
+        <div class="heading">
+            <h2>Our Services</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure, dolore autem! Commodi a, repudiandae
+                sed fugiat doloremque repellendus amet facere.</p>
+        </div>
+
+        <div class="services">
+            <div class="row">
+                {% for service in services %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="service {{ service.color }}">
+                        <img src="{{ HTTP_HOST }}/media/{{ service.icon }}" alt="">
+                        <h4>{{ service.title }}</h4>
+                        <p>{{ service.service }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- service section end -->
+
+
+<!-- course section start -->
+<section class="category-section custom-bg">
+    <div class="container category__container">
+        <div class="heading">
+            <h2>All Courses</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure, dolore autem! Commodi a, repudiandae
+                sed fugiat doloremque repellendus amet facere.</p>
+        </div>
+
+        <div class="categories">
+            <div class="row">
+                {% for category in categories %}
+                <div class="col-lg-2">
+                    <div class="card category">
+                        <a href="#"><img src="{{ HTTP_HOST }}/media/{{ category.image }}" alt=""></a>
+                        <h4><a href="#">{{ category.name }}</a></h4>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- course section end -->
+
+
+
+<!-- course section start -->
+<section class="course-section">
+    <div class="container course__container">
+        <div class="heading">
+            <h2>Popular Courses</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure, dolore autem! Commodi a, repudiandae
+                sed fugiat doloremque repellendus amet facere.</p>
+        </div>
+
+        {% for cat in course_categories %}
+        <div class="course-wrap">
+            <h4>{{ cat.name }}</h4>
+            <div class="row">
+                {% for course in cat.course_set.all %}
+                <div class="col-lg-4">
+                    <div class="card course">
+                        <div class="image">
+                            <a href="#"><img src="{{ HTTP_HOST }}/media/{{ course.image }}" alt=""></a>
+                        </div>
+                        <div class="text-area">
+                            <h4 class="mb-3"><a href="#">{{ course.title }}</a></h4>
+                            <div class="info d-flex justify-content-between mb-3">
+                                <div class="class">
+                                    <i class="fa-solid fa-circle-play"></i>
+                                    <span>{{ course.total_class }}+ Classes</span>
+                                </div>
+                                <div class="month">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>{{ course.duration }} Months</span>
+                                </div>
+                            </div>
+                            <p class="fee">Course Fee: {{ course.price }} TK.</p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-lg-12 text-center p-5">
+                   <h3>No course available in this category!!</h3>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+        {% endfor %}
+
+
+        <div class="load-more text-center mt-4">
+            <a href="#" class="btn btn-custom">Browse All Courses</a>
+        </div>
+    </div>
+</section>
+<!-- course section end -->
+
+
+{% endblock %}
